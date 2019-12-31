@@ -1,0 +1,49 @@
+apply plugin: "maven-publish"
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    archiveClassifier.set("sources")
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId "com.daycold"
+            if (project.hasProperty("group")) {
+                groupId property("group")
+            }
+
+            def mainVersion = "$version".toString()
+            if (project.hasProperty("MAIN_VERSION")) {
+                mainVersion = property("MAIN_VERSION")
+            }
+
+            if (project.hasProperty("MINOR_VERSION")) {
+                version mainVersion + "." + property("MINOR_VERSION")
+            } else {
+                version mainVersion + ".0-SNAPSHOT"
+            }
+            from components.java
+            artifact sourceJar
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username ""
+                password "%R2E?Y2x"
+            }
+            if (project.hasProperty("MINOR_VERSION")) {
+                url ""
+            } else {
+                url ""
+            }
+        }
+    }
+}
