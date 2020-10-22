@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.3.40"
+    kotlin("jvm") version "1.4.10"
 }
 buildscript {
     repositories {
