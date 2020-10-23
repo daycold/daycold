@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.daycold.framework.caffeine.DemoCacheConfigurer
+  com.daycold.framework.caffeine.CacheConfiguration

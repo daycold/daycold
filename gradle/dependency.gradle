@@ -4,6 +4,7 @@ dependencyManagement {
         dependency "com.google.guava:guava:20.0"
         dependency "com.zaxxer:HikariCP:3.2.0"
         dependency "joda-time:joda-time:2.9.9"
+        dependenct "org.aspectj:aspectjweaver:1.9.6"
         dependency "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         dependency "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
         dependency "org.jetbrains.kotlin:kotlin-test:$kotlinVersion"

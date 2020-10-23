@@ -5,6 +5,8 @@ import org.springframework.cache.Cache
 import org.springframework.cache.caffeine.CaffeineCache
 import org.springframework.cache.caffeine.CaffeineCacheManager
 import org.springframework.cache.interceptor.CacheErrorHandler
+import org.springframework.cache.interceptor.KeyGenerator
+import java.lang.reflect.Method
 import java.time.Duration
 
 /**
@@ -115,6 +117,15 @@ class DemoCacheManager : CaffeineCacheManager() {
         override fun handleCacheEvictError(exception: RuntimeException, cache: Cache, key: Any) {
             throw exception
         }
+    }
+}
+
+class DemoKeyGenerator : KeyGenerator {
+    override fun generate(target: Any, method: Method, vararg params: Any?): Any {
+        if (params.isNullOrEmpty()) {
+            return ""
+        }
+        return params.joinToString(":")
     }
 }
 
