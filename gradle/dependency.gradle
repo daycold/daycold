@@ -3,6 +3,8 @@ dependencyManagement {
         dependency "com.github.ben-manes.caffeine:caffeine:2.8.5"
         dependency "com.google.guava:guava:20.0"
         dependency "com.zaxxer:HikariCP:3.2.0"
+        dependency "io.github.openfeign:feign-core:11.0"
+        dependency "javax.servlet:servlet-api:4.0.1"
         dependency "joda-time:joda-time:2.9.9"
         dependenct "org.aspectj:aspectjweaver:1.9.6"
         dependency "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
@@ -17,8 +19,12 @@ dependencyManagement {
         dependency "org.springframework:spring-context:$springVersion"
         dependency "org.springframework:spring-context-support:$springVersion"
         dependency "org.springframework:spring-jdbc:$springVersion"
+        dependency "org.springframework:spring-messaging:$springVersion"
+        dependency "org.springframework:spring-webmvc:$springversion"
+        dependency "org.springframework:spring-webflux:$springversion"
         dependency "org.springframework.boot:spring-boot-autoconfigure:$springBootVersion"
         dependency "org.springframework.data:spring-data-redis:$springBootVersion"
+        dependency "org.springframework.integration:spring-integration-core:$springversion"
         dependency "redis.clients:jedis:3.3.0"
     }
 }
