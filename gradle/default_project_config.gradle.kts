@@ -3,18 +3,20 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
     repositories {
-        maven(url = "http://maven.aliyun.com/nexus/content/groups/public/")
+        maven(url = "https://maven.aliyun.com/repository/gradle-plugin/")
+        maven(url = "https://maven.aliyun.com/repository/spring-plugin/")
+        maven(url = "https://maven.aliyun.com/repository/public/")
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${project.extra["springBootVersion"]}")
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${project.extra["kotlinVersion"]}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${project.extra["kotlinVersion"]}")
     }
 }
 
 repositories {
-    maven(url = "http://maven.aliyun.com/nexus/content/groups/public/")
+    maven(url = "https://maven.aliyun.com/repository/public/")
 }
 
 apply(plugin = "java")
@@ -24,8 +26,8 @@ apply(plugin = "org.springframework.boot")
 apply(plugin = "io.spring.dependency-management")
 apply(from = "${rootProject.rootDir}/gradle/dependency.gradle")
 
-tasks.named<Jar>("jar") { 
-    enabled = true 
+tasks.named<Jar>("jar") {
+    enabled = true
 }
 
 tasks.named<BootJar>("bootJar") {
