@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 
 buildscript {
     repositories {
@@ -9,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${project.extra["springBootVersion"]}")
-        classpath("io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${project.extra["kotlinVersion"]}")
         classpath("org.jetbrains.kotlin:kotlin-allopen:${project.extra["kotlinVersion"]}")
     }
@@ -46,5 +47,6 @@ tasks.withType<JavaCompile> {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
     }
 }

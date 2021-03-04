@@ -34,8 +34,10 @@ class RedisConfiguration {
     class Demo {
         @Bean
         fun getRedisService(jedisConnectionFactory: JedisConnectionFactory): RedisService {
-            return Proxy.newProxyInstance(RedisService::class.java.classLoader, arrayOf<Class<*>>(RedisService::class.java),
-                    RedisServiceDataInvocator(jedisConnectionFactory)) as RedisService
+            return Proxy.newProxyInstance(
+                RedisService::class.java.classLoader, arrayOf<Class<*>>(RedisService::class.java),
+                RedisServiceDataInvocator(jedisConnectionFactory)
+            ) as RedisService
         }
     }
 
@@ -44,29 +46,32 @@ class RedisConfiguration {
     class Test(private val properties: RedisProperties) {
         @Bean
         fun getRedisService(): RedisService {
-            return Proxy.newProxyInstance(RedisService::class.java.classLoader, arrayOf<Class<*>>(RedisService::class.java),
-                    RedisServiceInvocator(createJedisPool())) as RedisService
+            return Proxy.newProxyInstance(
+                RedisService::class.java.classLoader, arrayOf<Class<*>>(RedisService::class.java),
+                RedisServiceInvocator(createJedisPool())
+            ) as RedisService
         }
 
         private fun createJedisPool(): JedisPool {
-            return JedisPool(JedisPoolConfig(), properties.host, properties.port,
-                    properties.timeout?.toMillis()?.toInt() ?: 5000,
-                    properties.password, properties.database, "default")
+            return JedisPool(
+                JedisPoolConfig(), properties.host, properties.port,
+                properties.timeout?.toMillis()?.toInt() ?: 5000,
+                properties.password, properties.database, "default"
+            )
         }
     }
 
     class RedisServiceDataInvocator(
-            private val jedisConnectionFactory: JedisConnectionFactory,
-            private val log: Logger = LoggerFactory.getLogger(RedisService::class.java)
+        private val jedisConnectionFactory: JedisConnectionFactory,
+        private val log: Logger = LoggerFactory.getLogger(RedisService::class.java)
     ) : InvocationHandler {
         override fun invoke(proxy: Any?, method: Method, args: Array<out Any?>?): Any {
             if (method.declaringClass == Any::class.java) {
                 return if (args == null) method.invoke(this) else method.invoke(this, *args)
             }
-            if (jedisConnectionFactory.)
-                if (method.declaringClass == Closeable::class.java || method.declaringClass == AutoCloseable::class.java) {
-                    return jedisConnectionFactory.destroy()
-                }
+            if (method.declaringClass == Closeable::class.java || method.declaringClass == AutoCloseable::class.java) {
+                return jedisConnectionFactory.destroy()
+            }
             var connection: RedisConnection? = null
             try {
                 val mills = System.currentTimeMillis()
@@ -84,8 +89,8 @@ class RedisConfiguration {
 
 
     class RedisServiceInvocator(
-            private val jedisPool: JedisPool,
-            private val log: Logger = LoggerFactory.getLogger(RedisService::class.java)
+        private val jedisPool: JedisPool,
+        private val log: Logger = LoggerFactory.getLogger(RedisService::class.java)
     ) : InvocationHandler {
         override fun invoke(proxy: Any, method: Method, args: Array<Any?>?): Any {
             if (method.declaringClass == Any::class.java) {
@@ -120,10 +125,10 @@ class RedisConfiguration {
 
         private fun buildLog(method: Method, mills: Long): String {
             return StringBuilder().append(method.name)
-                    .append(" executes spending ")
-                    .append(System.currentTimeMillis() - mills)
-                    .append(" ms")
-                    .toString()
+                .append(" executes spending ")
+                .append(System.currentTimeMillis() - mills)
+                .append(" ms")
+                .toString()
         }
     }
 }
